@@ -24,7 +24,6 @@ export function useTaskList() {
         try {
             const response = await taskApi.search(searchKeyword.value);
             tasks.value = response.data;
-            console.log(response.data);
         } catch (err) {
             alert("Không thể kết nối đến server!");
         }
@@ -84,8 +83,6 @@ export function useTaskList() {
     };
 
     const updateTask = async (id, payload) => {
-        console.log("Updating Task ID:", id);
-        console.log("Payload data:", payload);
         try {
             await taskApi.update(id, payload);
             await fetchTasks();

@@ -16,11 +16,9 @@ watch(() => props.initialImages, (newVal) => {
 });
 const handleUpload = async (event) => {
   const files = event.target.files;
-  console.log("handleUpload invoked, files:", files);
   if (!files) return;
 
   for (let i = 0; i < files.length; i++) {
-    console.log(`Uploading file #${i}:`, files[i]);
     await uploadImage(files[i]);
   }
   event.target.value = '';
@@ -34,7 +32,7 @@ defineExpose({ imgList });
     <div class="grid-container">
       <div v-for="(image, index) in imgList" :key="index" class="image-item">
         <img :src="`http://localhost:8080/${image.thumbUrl}`" class="thumbnail" />
-        <button @click="deleteImage(index)" class="remove-btn">×</button>
+        <button type ="button" @click="deleteImage(index)" class="remove-btn">×</button>
       </div>
 
       <label class="add-box">

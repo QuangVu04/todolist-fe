@@ -11,7 +11,6 @@ const props = defineProps({
     type: Object, 
     default: () => ({}) }
 })
-console.log("TaskForm props:", props);
 
 const imageUploaderRef = ref(null);
 const isTouched = ref(false);
@@ -38,7 +37,6 @@ const assignInitialData = () => {
     formData.value = { 
       ...props.initialData,
     };
-    console.log("Assigned initial data to formData:", formData.value);
   }
 };
 
@@ -46,10 +44,6 @@ const assignInitialData = () => {
 const handleSubmit = (event) => {
   event.preventDefault(); 
   
-  if (!formData.value.title.trim()) {
-    alert("Vui lòng nhập Title!");
-    return;
-  }
   const currentImages = imageUploaderRef.value.imgList;
   formData.value.pictures = [...currentImages];
 
@@ -80,12 +74,12 @@ onMounted(() => {
         <div class="font flex flex-size"><label class="label-font" >Due Date : <sup>*</sup> <small>Required</small></label><input name="date" id="date" type="date" :min="new Date().toLocaleDateString('en-CA')" placeholder="date" class="input input-date" v-model="formData.dueDate" @blur="isTouched = true" @input="isTouched = false"
         :class="{ 'input-error': required.dueDate && isTouched }"></div>
         <div class="font flex flex-size"><label class="label-font">Priority :  <sup style = "color: #FFFFFF">*</sup><small></small></label><div class="input-priority"><select name="priority" v-model="formData.priority"><option value="low">low</option><option value="high">high</option><option value="normal">normal</option></select></div></div></div>
-    <div class="font"><button type="submit" class="submit-button">{{ buttonName }}</button></div>
+        <div>
+            <ImageUploader ref="imageUploaderRef"
+            :initialImages="formData.pictures"/>
+        </div>
+        <div class="font"><button type="submit" class="submit-button">{{ buttonName }}</button></div>
     </form>
-    <div>
-        <ImageUploader ref="imageUploaderRef"
-        :initialImages="formData.pictures"/>
-    </div>
 </template>
 
 <style scoped>

@@ -6,13 +6,9 @@ export function useImageUploader() {
     const imgList = ref([]);
     const uploadImage = async (file) => {
     try {
-        console.log("Uploading file:", file);
         const formData = new FormData();
         formData.append('file', file); 
-        console.log("Uploading file2:", file);
         const response = await pictureApi.uploadPicture(formData);
-        
-        console.log("Full Response:", response);
 
         if (response && response.data) {
             const newImageData = {
